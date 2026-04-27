@@ -12,9 +12,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// 2. Get the id, names and dates
-// **MUST** select the 'id' column for actions to work
-$sql = "SELECT id, name, birthdate FROM birthdays";
+// 2. Get the id, names, dates, and address
+// Added 'address' to the SELECT statement
+$sql = "SELECT id, name, birthdate, address FROM birthdays";
 $result = $conn->query($sql);
 ?>
 
@@ -42,25 +42,29 @@ $result = $conn->query($sql);
                 <tr>
                     <th>Naam</th>
                     <th>Geboortedatum</th>
-                    <th>Acties</th> </tr>
+                    <th>Adres</th> 
+                    <th>Acties</th> 
+                </tr>
             </thead>
             <tbody>
                 <?php
                 // 3. Loop through the data and create the rows
-                if ($result->num_rows > 0) {
+                if ($result && $result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
-                        echo "<tr>
-                                <td>" . htmlspecialchars($row["name"]) . "</td>
-                                <td>" . htmlspecialchars($row["birthdate"]) . "</td>
-                                <td>
-                                    <a href='edit.php?id=" . $row['id'] . "' class='btn-edit'>Edit</a> 
-                                    | 
-                                    <a href='delete.php?id=" . $row['id'] . "' class='btn-delete' onclick='return confirm(\"Are you sure that you " . htmlspecialchars($row['name']) . " will you like to delete?\")'>Delete</a>
-                                </td>
-                              </tr>";
+                        echo "<tr>";
+                        echo "<td>" . htmlspecialchars($row["name"]) . "</td>";
+                        echo "<td>" . htmlspecialchars($row["birthdate"]) . "</td>";
+                        echo "<td>" . htmlspecialchars($row["address"] ?? '') . "</td>";
+                        echo "<td>
+                                <a href='edit.php?id=" . $row['id'] . "' class='btn-edit'>Edit</a> 
+                                | 
+                                <a href='delete.php?id=" . $row['id'] . "' class='btn-delete' onclick='return confirm(\"Are you sure you want to delete " . htmlspecialchars($row['name']) . "?\")'>Delete</a>
+                              </td>";
+                        echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='3'>Geen gegevens gevonden</td></tr>";
+                    // colspan is now 4 because we have 4 columns
+                    echo "<tr><td colspan='4'>Geen gegevens gevonden</td></tr>";
                 }
                 ?>
             </tbody>
