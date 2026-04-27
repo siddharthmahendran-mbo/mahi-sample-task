@@ -7,14 +7,12 @@ $db   = "mahi_family_db";
 
 $conn = new mysqli($host, $user, $pass, $db);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// 2. Get the id, names and dates
-// **MUST** select the 'id' column for actions to work
-$sql = "SELECT id, name, birthdate FROM birthdays";
+// CHANGE 1: Add 'address' to your SQL query string
+$sql = "SELECT id, name, birthdate, address FROM birthdays"; 
 $result = $conn->query($sql);
 ?>
 
@@ -42,17 +40,17 @@ $result = $conn->query($sql);
                 <tr>
                     <th>Naam</th>
                     <th>Geboortedatum</th>
-                    <th>Acties</th> </tr>
+                    <th>Adres</th> <th>Acties</th> 
+                </tr>
             </thead>
             <tbody>
                 <?php
-                // 3. Loop through the data and create the rows
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
                         echo "<tr>
                                 <td>" . htmlspecialchars($row["name"]) . "</td>
                                 <td>" . htmlspecialchars($row["birthdate"]) . "</td>
-                                <td>
+                                <td>" . htmlspecialchars($row["address"]) . "</td> <td>
                                     <a href='edit.php?id=" . $row['id'] . "' class='btn-edit'>Edit</a> 
                                     | 
                                     <a href='delete.php?id=" . $row['id'] . "' class='btn-delete' onclick='return confirm(\"Are you sure that you " . htmlspecialchars($row['name']) . " will you like to delete?\")'>Delete</a>
@@ -60,7 +58,8 @@ $result = $conn->query($sql);
                               </tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='3'>Geen gegevens gevonden</td></tr>";
+                    // Update colspan to 4 because we added a column
+                    echo "<tr><td colspan='4'>Geen gegevens gevonden</td></tr>";
                 }
                 ?>
             </tbody>
