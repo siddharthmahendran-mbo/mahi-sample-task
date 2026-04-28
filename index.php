@@ -1,16 +1,11 @@
 <?php
 $host = "localhost"; $user = "root"; $pass = ""; $db = "mahi_family_db";
 $conn = new mysqli($host, $user, $pass, $db);
-
 if ($conn->connect_error) { die("Connection failed: " . $conn->connect_error); }
 
-// Step 1: Define the SQL string
 $sql = "SELECT id, name, birthdate, adress FROM birthdays";
-
-// Step 2: Execute the query
 $result = $conn->query($sql); 
 ?>
-
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -19,14 +14,19 @@ $result = $conn->query($sql);
     <title>Homepagina</title>
 </head>
 <body>
+    <div class="nav-bar">
+        <span class="logo"> < > MVC Basics (Database Version) </span>
+    </div>
+
     <div class="container">
         <h1>Homepagina</h1>
         <p>Deze gegevens komen rechtstreeks uit de MySQL database.</p>
+        
         <a href="edit.php" class="btn-add">+ Nieuw Toevoegen</a>
 
-        <table border="1" style="width:100%; margin-top:20px; border-collapse: collapse;">
+        <table class="data-table">
             <thead>
-                <tr style="background-color: #f2f2f2; text-align: left;">
+                <tr>
                     <th>NAAM</th>
                     <th>GEBOORTEDATUM</th>
                     <th>ADRES</th>
@@ -40,7 +40,11 @@ $result = $conn->query($sql);
                     <td><?php echo htmlspecialchars($row['birthdate']); ?></td>
                     <td><?php echo htmlspecialchars($row['adress'] ?? ''); ?></td>
                     <td>
-                        <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn-edit">Edit</a>
+                        <div class="action-buttons">
+                            <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn-edit">Edit</a>
+                            <span class="divider">|</span>
+                            <a href="delete.php?id=<?php echo $row['id']; ?>" class="btn-delete">Delete</a>
+                        </div>
                     </td>
                 </tr>
                 <?php endwhile; ?>
@@ -49,4 +53,3 @@ $result = $conn->query($sql);
     </div>
 </body>
 </html>
-<?php $conn->close(); ?>
