@@ -10,27 +10,26 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// 2. Initialize variables (Prevents "Undefined variable" errors)
+// 2. Initialize variables with empty strings to prevent "Undefined Variable" notices
 $id = "";
 $name = "";
 $birthdate = "";
 $adress = ""; 
 $pageTitle = "Nieuw Lid Toevoegen";
 
-// 3. Logic for Editing
+// 3. Logic for Editing existing records
 if (isset($_GET['id']) && !empty($_GET['id'])) {
     $id = $_GET['id'];
     $pageTitle = "Lid Bewerken";
 
-    // Escape the ID for safety
     $safe_id = $conn->real_escape_string($id);
     $sql = "SELECT name, birthdate, adress FROM birthdays WHERE id = '$safe_id'";
     $result = $conn->query($sql);
 
     if ($result && $result->num_rows == 1) {
         $row = $result->fetch_assoc();
-        $name = $row['name'];
-        $birthdate = $row['birthdate'];
+        $name = $row['name'] ?? "";
+        $birthdate = $row['birthdate'] ?? "";
         $adress = $row['adress'] ?? ""; 
     } else {
         echo "Lid niet gevonden.";
@@ -43,6 +42,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $pageTitle; ?></title>
     <link rel="stylesheet" href="style.css">
 </head>
