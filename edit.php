@@ -68,6 +68,11 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                 <input type="date" id="birthdate" name="birthdate" value="<?php echo htmlspecialchars($birthdate); ?>" required>
             </div>
 
+              <div class="form-group">
+                <label for="Adress">Adress:</label>
+                <input type="date" id="Adress" name="adress" value="<?php echo htmlspecialchars($adress); ?>" required>
+            </div>
+
             <div class="form-group">
                 <button type="submit" class="btn-submit">Opslaan</button>
                 <a href="index.php" class="btn-cancel">Annuleren</a>
