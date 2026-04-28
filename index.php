@@ -1,23 +1,12 @@
 <?php
-// 1. Connect to the database
-$host = "localhost";
-$user = "root"; 
-$pass = ""; 
-$db   = "mahi_family_db";
-
+$host = "localhost"; $user = "root"; $pass = ""; $db = "mahi_family_db";
 $conn = new mysqli($host, $user, $pass, $db);
+if ($conn->connect_error) { die("Connection failed: " . $conn->connect_error); }
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// 2. Get the id, names, dates AND adress
-// FIX: Added 'adress' to the SELECT statement
-$sql = "SELECT id, name, birthdate, adress FROM birthdays";
+// Define query with both adress and phonenumber
+$sql = "SELECT id, name, birthdate, adress, phonenumber FROM birthdays";
 $result = $conn->query($sql);
 ?>
-
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -26,7 +15,6 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <div class="nav-bar">
         <span class="logo"> < > MVC Basics (Database Version)</span>
     </div>
@@ -34,41 +22,33 @@ $result = $conn->query($sql);
     <div class="container">
         <h1>Homepagina</h1>
         <p>Deze gegevens komen rechtstreeks uit de MySQL database.</p>
-        
-        <a href="edit.php" class="btn btn-primary" style="margin-bottom: 15px; display: inline-block;">+ Nieuw Toevoegen</a>
+        <a href="edit.php" class="btn-add" style="margin-bottom: 15px; display: inline-block;">+ Nieuw Toevoegen</a>
 
         <table class="birthday-table">
             <thead>
                 <tr>
                     <th>Naam</th>
                     <th>Geboortedatum</th>
-                    <th>Adres</th> <th>Acties</th> 
+                    <th>Adres</th>
+                    <th>Telefoon</th>
+                    <th>Acties</th>
                 </tr>
             </thead>
             <tbody>
-                <?php
-                // 3. Loop through the data and create the rows
-                if ($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) {
-                        echo "<tr>
-                                <td>" . htmlspecialchars($row["name"]) . "</td>
-                                <td>" . htmlspecialchars($row["birthdate"]) . "</td>
-                                <td>" . htmlspecialchars($row["adress"] ?? '') . "</td>
-                                <td>
-                                    <a href='edit.php?id=" . $row['id'] . "' class='btn-edit'>Edit</a> 
-                                    | 
-                                    <a href='delete.php?id=" . $row['id'] . "' class='btn-delete' onclick='return confirm(\"Are you sure that you " . htmlspecialchars($row['name']) . " will you like to delete?\")'>Delete</a>
-                                </td>
-                              </tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='4'>Geen gegevens gevonden</td></tr>";
-                }
-                ?>
+                <?php while($row = $result->fetch_assoc()): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($row["name"]); ?></td>
+                    <td><?php echo htmlspecialchars($row["birthdate"]); ?></td>
+                    <td><?php echo htmlspecialchars($row["adress"] ?? ''); ?></td>
+                    <td><?php echo htmlspecialchars($row["phonenumber"] ?? ''); ?></td>
+                    <td>
+                        <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn-edit">Edit</a> | 
+                        <a href="delete.php?id=<?php echo $row['id']; ?>" class="btn-delete" onclick="return confirm('Zeker weten?')">Delete</a>
+                    </td>
+                </tr>
+                <?php endwhile; ?>
             </tbody>
         </table>
     </div>
-
 </body>
 </html>
-<?php $conn->close(); ?>

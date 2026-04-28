@@ -2,21 +2,21 @@
 $host = "localhost"; $user = "root"; $pass = ""; $db = "mahi_family_db";
 $conn = new mysqli($host, $user, $pass, $db);
 
-$id = $_POST['id'] ?? "";
-$name = $conn->real_escape_string($_POST['name'] ?? "");
-$birthdate = $conn->real_escape_string($_POST['birthdate'] ?? "");
-$adress = $conn->real_escape_string($_POST['adress'] ?? ""); 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id = $_POST['id'] ?? "";
+    $name = $conn->real_escape_string($_POST['name']);
+    $birthdate = $conn->real_escape_string($_POST['birthdate']);
+    $adress = $conn->real_escape_string($_POST['adress']);
+    $phonenumber = $conn->real_escape_string($_POST['phonenumber']);
 
-if (!empty($id)) {
-    $sql = "UPDATE birthdays SET name='$name', birthdate='$birthdate', adress='$adress' WHERE id='$id'";
-} else {
-    $sql = "INSERT INTO birthdays (name, birthdate, adress) VALUES ('$name', '$birthdate', '$adress')";
-}
+    if (!empty($id)) {
+        $sql = "UPDATE birthdays SET name='$name', birthdate='$birthdate', adress='$adress', phonenumber='$phonenumber' WHERE id='$id'";
+    } else {
+        $sql = "INSERT INTO birthdays (name, birthdate, adress, phonenumber) VALUES ('$name', '$birthdate', '$adress', '$phonenumber')";
+    }
 
-if ($conn->query($sql) === TRUE) {
-    header("Location: index.php?msg=Succes");
-} else {
-    echo "Error: " . $conn->error;
+    $conn->query($sql);
+    header("Location: index.php");
+    exit();
 }
-$conn->close();
 ?>
