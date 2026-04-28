@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 
 // 2. Get the id, names, dates, and address
 // Added 'address' to the SELECT statement
-$sql = "SELECT id, name, birthdate, address FROM birthdays";
+$query = "SELECT id, name, birthdate, adress FROM birthdays";
 $result = $conn->query($sql);
 ?>
 
