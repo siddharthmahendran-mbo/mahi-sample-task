@@ -12,9 +12,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// 2. Get the id, names and dates
-// **MUST** select the 'id' column for actions to work
-$sql = "SELECT id, name, birthdate FROM birthdays";
+// 2. Get the id, names, dates AND adress
+// FIX: Added 'adress' to the SELECT statement
+$sql = "SELECT id, name, birthdate, adress FROM birthdays";
 $result = $conn->query($sql);
 ?>
 
@@ -42,7 +42,8 @@ $result = $conn->query($sql);
                 <tr>
                     <th>Naam</th>
                     <th>Geboortedatum</th>
-                    <th>Acties</th> </tr>
+                    <th>Adres</th> <th>Acties</th> 
+                </tr>
             </thead>
             <tbody>
                 <?php
@@ -52,6 +53,7 @@ $result = $conn->query($sql);
                         echo "<tr>
                                 <td>" . htmlspecialchars($row["name"]) . "</td>
                                 <td>" . htmlspecialchars($row["birthdate"]) . "</td>
+                                <td>" . htmlspecialchars($row["adress"] ?? '') . "</td>
                                 <td>
                                     <a href='edit.php?id=" . $row['id'] . "' class='btn-edit'>Edit</a> 
                                     | 
@@ -60,7 +62,7 @@ $result = $conn->query($sql);
                               </tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='3'>Geen gegevens gevonden</td></tr>";
+                    echo "<tr><td colspan='4'>Geen gegevens gevonden</td></tr>";
                 }
                 ?>
             </tbody>
