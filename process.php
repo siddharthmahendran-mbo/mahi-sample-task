@@ -12,25 +12,26 @@ if ($conn->connect_error) {
 }
 
 // Get data from the form via POST method
-$id = $_POST['id'];
-// Use mysqli_real_escape_string to sanitize input and prevent SQL injection
-$name = $conn->real_escape_string($_POST['name']);
-$birthdate = $conn->real_escape_string($_POST['birthdate']);
+// We use the ?? "" (null coalescing operator) to prevent "Undefined index" errors
+$id = $_POST['id'] ?? "";
+$name = $conn->real_escape_string($_POST['name'] ?? "");
+$birthdate = $conn->real_escape_string($_POST['birthdate'] ?? "");
+$adress = $conn->real_escape_string($_POST['adress'] ?? ""); // ADDED THIS
 
 if (empty($id)) {
-    // No ID present? Perform a NEW record INSERT query
-    $sql = "INSERT INTO birthdays (name, birthdate) VALUES ('$name', '$birthdate')";
+    // 1. Updated INSERT query to include 'adress'
+    $sql = "INSERT INTO birthdays (name, birthdate, adress) VALUES ('$name', '$birthdate', '$adress')";
     $message = "Lid succesvol toegevoegd.";
 } else {
-    // ID present? Perform an EXISTING record UPDATE query
+    // 2. Updated UPDATE query to include 'adress'
     $id = $conn->real_escape_string($id);
-    $sql = "UPDATE birthdays SET name = '$name', birthdate = '$birthdate' WHERE id = '$id'";
+    $sql = "UPDATE birthdays SET name = '$name', birthdate = '$birthdate', adress = '$adress' WHERE id = '$id'";
     $message = "Lid succesvol bijgewerkt.";
 }
 
 // Execute the query
 if ($conn->query($sql) === TRUE) {
-    // Redirect back to main page on success, with a message query parameter
+    // Redirect back to main page on success
     header("Location: index.php?msg=" . urlencode($message));
     exit();
 } else {
