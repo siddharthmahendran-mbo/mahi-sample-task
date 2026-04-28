@@ -1,5 +1,5 @@
 <?php
-// Database Connection
+// 1. Database Connection
 $host = "localhost";
 $user = "root"; 
 $pass = ""; 
@@ -10,13 +10,14 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Initializing variables so they exist for the HTML below
+// 2. Initialize variables with empty strings to prevent "Undefined Variable" notices
 $id = "";
 $name = "";
 $birthdate = "";
 $adress = ""; 
 $pageTitle = "Nieuw Lid Toevoegen";
 
+// 3. Logic for Editing existing records
 if (isset($_GET['id']) && !empty($_GET['id'])) {
     $id = $_GET['id'];
     $pageTitle = "Lid Bewerken";
@@ -41,32 +42,36 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $pageTitle; ?></title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <div class="nav-bar">
-        <span class="logo">MVC Basics</span>
+        <span class="logo"> < > MVC Basics </span>
     </div>
 
     <div class="container">
         <h1><?php echo $pageTitle; ?></h1>
+        <p>Pas de gegevens aan en klik op opslaan.</p>
+
         <form action="process.php" method="POST">
             <input type="hidden" name="id" value="<?php echo htmlspecialchars((string)$id); ?>">
 
             <div class="form-group">
-                <label>Naam:</label>
-                <input type="text" name="name" value="<?php echo htmlspecialchars((string)$name); ?>" required>
+                <label for="name">Naam:</label>
+                <input type="text" id="name" name="name" value="<?php echo htmlspecialchars((string)$name); ?>" required>
             </div>
 
             <div class="form-group">
-                <label>Geboortedatum:</label>
-                <input type="date" name="birthdate" value="<?php echo htmlspecialchars((string)$birthdate); ?>" required>
+                <label for="birthdate">Geboortedatum:</label>
+                <input type="date" id="birthdate" name="birthdate" value="<?php echo htmlspecialchars((string)$birthdate); ?>" required>
             </div>
 
             <div class="form-group">
-                <label>Adres:</label>
-                <input type="text" name="adress" value="<?php echo htmlspecialchars((string)$adress); ?>" required>
+                <label for="Adress">Adres:</label>
+                <input type="text" id="Adress" name="adress" value="<?php echo htmlspecialchars((string)$adress); ?>" required>
             </div>
 
             <div class="form-group">
@@ -75,6 +80,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
             </div>
         </form>
     </div>
+
 </body>
 </html>
 <?php $conn->close(); ?>
