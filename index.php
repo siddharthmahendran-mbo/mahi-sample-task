@@ -3,6 +3,7 @@ $host = "localhost"; $user = "root"; $pass = ""; $db = "mahi_family_db";
 $conn = new mysqli($host, $user, $pass, $db);
 if ($conn->connect_error) { die("Connection failed: " . $conn->connect_error); }
 
+// Fix: Define the SQL variable properly
 $sql = "SELECT id, name, birthdate, adress FROM birthdays";
 $result = $conn->query($sql); 
 ?>

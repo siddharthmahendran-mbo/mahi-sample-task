@@ -9,10 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $adress = $conn->real_escape_string($_POST['adress']);
 
     if (!empty($id)) {
-        // UPDATE existing
         $sql = "UPDATE birthdays SET name='$name', birthdate='$birthdate', adress='$adress' WHERE id='$id'";
     } else {
-        // INSERT new
         $sql = "INSERT INTO birthdays (name, birthdate, adress) VALUES ('$name', '$birthdate', '$adress')";
     }
 
