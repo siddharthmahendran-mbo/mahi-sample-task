@@ -12,6 +12,12 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// 1. First, create the variable and put the SQL string inside it
+$sql = "SELECT id, name, birthdate, adress FROM birthdays";
+
+// 2. NOW you can use it on line 18
+$result = $conn->query($sql);
+
 // 2. Get the id, names, dates, and address
 // Added 'address' to the SELECT statement
 $query = "SELECT id, name, birthdate, adress FROM birthdays";
