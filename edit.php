@@ -2,7 +2,8 @@
 $host = "localhost"; $user = "root"; $pass = ""; $db = "mahi_family_db";
 $conn = new mysqli($host, $user, $pass, $db);
 
-$id = ""; $name = ""; $birthdate = ""; $adress = ""; $phonenumber = "";
+// FIXED: Added $emailadress to initialization
+$id = ""; $name = ""; $birthdate = ""; $adress = ""; $phonenumber = ""; $emailadress = "";
 
 if (isset($_GET['id']) && !empty($_GET['id'])) {
     $id = $conn->real_escape_string($_GET['id']);
@@ -12,6 +13,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
         $birthdate = $row['birthdate'];
         $adress = $row['adress'];
         $phonenumber = $row['phonenumber'];
+        $emailadress = $row['emailadress']; // FIXED: Fetch email from DB
     }
 }
 ?>
@@ -43,8 +45,14 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                 <label>Telefoonnummer:</label><br>
                 <input type="text" name="phonenumber" value="<?php echo htmlspecialchars($phonenumber); ?>" required>
             </div>
-            <button type="submit" class="btn-edit">Opslaan</button>
-            <a href="index.php">Annuleren</a>
+            <!-- FIXED: Added Email Address Input Group -->
+            <div class="form-group">
+                <label>Email Adress:</label><br>
+                <input type="email" name="emailadress" value="<?php echo htmlspecialchars($emailadress); ?>" required>
+            </div>
+            
+            <button type="submit" class="btn-edit" style="margin-top: 10px;">Opslaan</button>
+            <a href="index.php" style="margin-left: 10px;">Annuleren</a>
         </form>
     </div>
 </body>

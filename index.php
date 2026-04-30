@@ -3,8 +3,8 @@ $host = "localhost"; $user = "root"; $pass = ""; $db = "mahi_family_db";
 $conn = new mysqli($host, $user, $pass, $db);
 if ($conn->connect_error) { die("Connection failed: " . $conn->connect_error); }
 
-// Define query with both adress and phonenumber
-$sql = "SELECT id, name, birthdate, adress, phonenumber FROM birthdays";
+// FIXED: Added emailadress to the SELECT statement
+$sql = "SELECT id, name, birthdate, adress, phonenumber, emailadress FROM birthdays";
 $result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
@@ -31,6 +31,7 @@ $result = $conn->query($sql);
                     <th>Geboortedatum</th>
                     <th>Adres</th>
                     <th>Telefoon</th>
+                    <th>Email Adres</th> <!-- FIXED: Added missing header -->
                     <th>Acties</th>
                 </tr>
             </thead>
@@ -41,6 +42,7 @@ $result = $conn->query($sql);
                     <td><?php echo htmlspecialchars($row["birthdate"]); ?></td>
                     <td><?php echo htmlspecialchars($row["adress"] ?? ''); ?></td>
                     <td><?php echo htmlspecialchars($row["phonenumber"] ?? ''); ?></td>
+                    <td><?php echo htmlspecialchars($row["emailadress"] ?? ''); ?></td> <!-- This will now work -->
                     <td>
                         <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn-edit">Edit</a> | 
                         <a href="delete.php?id=<?php echo $row['id']; ?>" class="btn-delete" onclick="return confirm('Zeker weten?')">Delete</a>
