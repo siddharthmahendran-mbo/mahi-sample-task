@@ -1,140 +1,110 @@
-/* --- CRITICAL GLOBAL RESET --- */
-/* This ensures layout behaves as expected */
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-
+/* General Layout */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #ffffff; /* Page background color from your original */
+    background-color: #f8f9fa;
     margin: 0;
     color: #333;
 }
 
-/* --- Navigation Bar Styling --- */
 .nav-bar {
-    background-color: #212529; /* Dark background from image */
+    background-color: #2c3e50;
     color: white;
-    padding: 15px 50px;
+    padding: 15px 20px;
     font-weight: bold;
-    border-bottom: 2px solid #333; /* Subtler border than original */
 }
 
-.logo {
-    font-size: 1.1em;
-}
-
-/* --- Main Content Container --- */
 .container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 0 20px;
+    max-width: 1200px; /* Increased to fit the new column */
+    margin: 30px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 8px;
 }
 
-h1 {
-    margin-bottom: 10px;
-    color: #2c3e50;
-    font-weight: 600;
-}
-
-p {
-    color: #666;
-    margin-bottom: 30px;
-}
-
-/* --- Table Styling - Polished Version --- */
+/* Table Styling */
 .birthday-table {
     width: 100%;
-    border-collapse: collapse; /* Essential for neat grid lines */
+    border-collapse: collapse;
     margin-top: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03); /* Soft shadow like image */
-    border: 1px solid #e0e0e0;
-}
-
-.birthday-table th, .birthday-table td {
-    padding: 18px 15px; /* Spacious padding like image */
-    text-align: left;
-    border-bottom: 1px solid #f0f0f0;
 }
 
 .birthday-table th {
-    background-color: #fcfcfc; /* Very light grey header */
-    font-weight: 600;
-    color: #2c3e50;
-    text-transform: uppercase; /* Match professional look */
-    font-size: 13px;
-    letter-spacing: 0.5px;
-    border-bottom: 2px solid #e0e0e0; /* Strong line below headers */
+    background-color: #f1f3f5;
+    color: #495057;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    padding: 15px;
+    border-bottom: 2px solid #dee2e6;
+    text-align: left;
 }
 
-/* Hover effect on rows */
-.birthday-table tr:hover {
-    background-color: #f2f6ff;
+.birthday-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
 }
 
-/* --- Button Styling --- */
-/* Base button styles */
-.btn-edit, .btn-delete, .btn-primary {
+/* Specific Column Tuning */
+.birthday-table td:nth-child(5) { /* Email Column */
+    color: #007bff;
+    font-style: italic;
+}
+
+/* Action Buttons Container */
+.birthday-table td:last-child {
+    white-space: nowrap; /* Prevents buttons from wrapping like in image_e1a41a.png */
+    width: 1%; /* Shrinks column to fit content */
+}
+
+/* Button Styling */
+.btn-add {
+    background-color: #6f42c1;
+    color: white;
+    padding: 10px 15px;
     text-decoration: none;
-    padding: 8px 15px; /* Match spacing from image */
     border-radius: 4px;
-    font-size: 14px;
-    display: inline-block;
-    transition: background-color 0.2s, opacity 0.2s;
-    border: none;
-    cursor: pointer;
+    font-size: 0.9rem;
 }
 
-.btn-edit:hover, .btn-delete:hover, .btn-primary:hover {
+.btn-edit {
+    background-color: #007bff;
+    color: white;
+    padding: 6px 12px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    color: white;
+    padding: 6px 12px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.btn-edit:hover, .btn-delete:hover, .btn-add:hover {
     opacity: 0.85;
 }
 
-/* Primary '+ Nieuw Toevoegen' Button */
-.btn-primary {
-    background-color: #212529; /* Dark button */
-    color: white;
-    padding: 10px 15px;
-    font-size: 15px;
+/* Form Styling (for edit.php) */
+.form-group {
     margin-bottom: 15px;
 }
 
-/* Edit 'Bewerk' Button */
-.btn-edit {
-    color: #fff;
-    background-color: #007bff; /* Bright blue like image */
+.form-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
 }
 
-/* Delete 'Verwijder' Button */
-.btn-delete {
-    color: #fff;
-    background-color: #dc3545; /* Bright red like image */
-}
-
-/* Form-specific styling (needed for edit.php) */
-.form-group { margin-bottom: 15px; }
-label { display: block; margin-bottom: 5px; font-weight: bold; }
-input[type="text"], input[type="date"] {
+.form-group input {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; /* Crucial for form elements */
-}
-.btn-submit {
-    background-color: #212529;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-.btn-cancel {
-    background-color: #f8f9fa;
-    color: #333;
-    border: 1px solid #ccc;
-    padding: 10px 20px;
-    border-radius: 4px;
-    text-decoration: none;
-    margin-left: 10px;
+    box-sizing: border-box; /* Important for width calculation */
 }
