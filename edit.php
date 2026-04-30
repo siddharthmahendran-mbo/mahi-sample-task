@@ -1,34 +1,51 @@
 <?php
-// Database connection
-$conn = new mysqli("localhost", "root", "", "mahi_family_db");
+$host = "localhost"; $user = "root"; $pass = ""; $db = "mahi_family_db";
+$conn = new mysqli($host, $user, $pass, $db);
 
-$id = $_GET['id'] ?? '';
-$name = $birthdate = $adress = $phonenumber = $email = "";
+$id = ""; $name = ""; $birthdate = ""; $adress = ""; $phonenumber = "";
 
-if ($id) {
-    $res = $conn->query("SELECT * FROM birthdays WHERE id=$id");
-    $row = $res->fetch_assoc();
-    extract($row); // Populates variables with database values
+if (isset($_GET['id']) && !empty($_GET['id'])) {
+    $id = $conn->real_escape_string($_GET['id']);
+    $res = $conn->query("SELECT * FROM birthdays WHERE id = '$id'");
+    if ($row = $res->fetch_assoc()) {
+        $name = $row['name'];
+        $birthdate = $row['birthdate'];
+        $adress = $row['adress'];
+        $phonenumber = $row['phonenumber'];
+    }
 }
 ?>
-
-<form action="process.php" method="POST">
-    <input type="hidden" name="id" value="<?php echo $id; ?>">
-    
-    <label>Naam:</label>
-    <input type="text" name="name" value="<?php echo $name; ?>" required>
-    
-    <label>Geboortedatum:</label>
-    <input type="date" name="birthdate" value="<?php echo $birthdate; ?>" required>
-    
-    <label>Adres:</label>
-    <input type="text" name="adress" value="<?php echo $adress; ?>" required>
-    
-    <label>Telefoon:</label>
-    <input type="text" name="phonenumber" value="<?php echo $phonenumber; ?>" required>
-    
-    <label>Email Adress:</label>
-    <input type="email" name="email" value="<?php echo $email; ?>" required>
-    
-    <button type="submit">Opslaan</button>
-</form>
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <title>Lid Bewerken</title>
+</head>
+<body>
+    <div class="nav-bar"><span class="logo"> < > MVC Basics </span></div>
+    <div class="container">
+        <h1>Lid Bewerken</h1>
+        <form action="process.php" method="POST">
+            <input type="hidden" name="id" value="<?php echo $id; ?>">
+            <div class="form-group">
+                <label>Naam:</label><br>
+                <input type="text" name="name" value="<?php echo htmlspecialchars($name); ?>" required>
+            </div>
+            <div class="form-group">
+                <label>Geboortedatum:</label><br>
+                <input type="date" name="birthdate" value="<?php echo htmlspecialchars($birthdate); ?>" required>
+            </div>
+            <div class="form-group">
+                <label>Adres:</label><br>
+                <input type="text" name="adress" value="<?php echo htmlspecialchars($adress); ?>" required>
+            </div>
+            <div class="form-group">
+                <label>Telefoonnummer:</label><br>
+                <input type="text" name="phonenumber" value="<?php echo htmlspecialchars($phonenumber); ?>" required>
+            </div>
+            <button type="submit" class="btn-edit">Opslaan</button>
+            <a href="index.php">Annuleren</a>
+        </form>
+    </div>
+</body>
+</html>
