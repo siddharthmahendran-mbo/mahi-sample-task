@@ -1,110 +1,50 @@
-/* General Layout */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
-    margin: 0;
-    color: #333;
-}
-
-.nav-bar {
-    background-color: #2c3e50;
-    color: white;
-    padding: 15px 20px;
-    font-weight: bold;
-}
-
+/* 1. Force the container to be wide enough for the new column */
 .container {
-    max-width: 1200px; /* Increased to fit the new column */
-    margin: 30px auto;
+    width: 95% !important; /* Uses almost the whole screen */
+    max-width: 1400px !important; 
+    margin: 20px auto;
     padding: 20px;
-    background: white;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
-/* Table Styling */
+/* 2. Force the table to take up the full container width */
 .birthday-table {
-    width: 100%;
+    width: 100% !important;
+    table-layout: auto; /* Allows columns to expand based on content */
     border-collapse: collapse;
-    margin-top: 20px;
+    min-width: 1000px; /* Forces a minimum width so it doesn't shrink */
 }
 
+/* 3. Style the Headers for better spacing */
 .birthday-table th {
-    background-color: #f1f3f5;
-    color: #495057;
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 1px;
-    padding: 15px;
-    border-bottom: 2px solid #dee2e6;
+    background: #f4f7f6;
+    padding: 15px 10px;
     text-align: left;
+    border-bottom: 2px solid #ececec;
+    white-space: nowrap; /* Keeps headers on one line */
 }
 
+/* 4. Style the Cells and prevent wrapping for the email */
 .birthday-table td {
-    padding: 15px;
-    border-bottom: 1px solid #eee;
-    vertical-align: middle;
+    padding: 15px 10px;
+    border-bottom: 1px solid #f1f1f1;
+    word-break: break-word; /* Allows email to break if absolutely necessary */
 }
 
-/* Specific Column Tuning */
-.birthday-table td:nth-child(5) { /* Email Column */
-    color: #007bff;
-    font-style: italic;
-}
-
-/* Action Buttons Container */
+/* 5. FIX THE ACTION BUTTONS (The issue in image_e1a41a.png) */
 .birthday-table td:last-child {
-    white-space: nowrap; /* Prevents buttons from wrapping like in image_e1a41a.png */
-    width: 1%; /* Shrinks column to fit content */
+    white-space: nowrap !important; /* FORCES buttons to stay side-by-side */
+    width: 160px; /* Gives enough fixed space for Edit | Delete */
 }
 
-/* Button Styling */
-.btn-add {
-    background-color: #6f42c1;
-    color: white;
-    padding: 10px 15px;
-    text-decoration: none;
-    border-radius: 4px;
-    font-size: 0.9rem;
-}
-
-.btn-edit {
-    background-color: #007bff;
-    color: white;
+/* 6. Make buttons look like proper buttons */
+.btn-edit, .btn-delete {
+    display: inline-block;
     padding: 6px 12px;
-    text-decoration: none;
+    margin: 2px;
     border-radius: 4px;
-    font-size: 0.85rem;
-}
-
-.btn-delete {
-    background-color: #dc3545;
-    color: white;
-    padding: 6px 12px;
     text-decoration: none;
-    border-radius: 4px;
-    font-size: 0.85rem;
-}
-
-.btn-edit:hover, .btn-delete:hover, .btn-add:hover {
-    opacity: 0.85;
-}
-
-/* Form Styling (for edit.php) */
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
+    font-size: 13px;
     font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box; /* Important for width calculation */
 }

@@ -12,7 +12,7 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <title>Family Overzicht</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=<?php echo time(); ?>">
 </head>
 <body>
     <div class="nav-bar">
