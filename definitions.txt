@@ -4,3 +4,4 @@ git merge
 when should i go git merge?
 Difference between Git add, git commit,git push
 How to create branch name? What are the rules?
+Difference between github and Git
