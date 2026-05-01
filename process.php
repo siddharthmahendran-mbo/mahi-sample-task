@@ -8,11 +8,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $birthdate = $conn->real_escape_string($_POST['birthdate']);
     $adress = $conn->real_escape_string($_POST['adress']);
     $phonenumber = $conn->real_escape_string($_POST['phonenumber']);
+    $emailadress = $conn->real_escape_string($_POST['emailadress']);
 
     if (!empty($id)) {
-        $sql = "UPDATE birthdays SET name='$name', birthdate='$birthdate', adress='$adress', phonenumber='$phonenumber' WHERE id='$id'";
+        // ADDED: emailadress='$emailadress'
+        $sql = "UPDATE birthdays SET name='$name', birthdate='$birthdate', adress='$adress', phonenumber='$phonenumber', emailadress='$emailadress' WHERE id='$id'";
     } else {
-        $sql = "INSERT INTO birthdays (name, birthdate, adress, phonenumber) VALUES ('$name', '$birthdate', '$adress', '$phonenumber')";
+        // ADDED: emailadress in columns and '$emailadress' in values
+        $sql = "INSERT INTO birthdays (name, birthdate, adress, phonenumber, emailadress) VALUES ('$name', '$birthdate', '$adress', '$phonenumber', '$emailadress')";
     }
 
     $conn->query($sql);
